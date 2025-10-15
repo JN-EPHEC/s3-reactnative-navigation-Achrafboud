@@ -1,68 +1,53 @@
 import React from "react";
-import { StyleSheet, Pressable, FlatList, Text, View } from "react-native";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../_layout";
+import { View, Text, Button, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-type Props = NativeStackScreenProps<RootStackParamList, "PostList">;
-
-const POSTS = [
+const posts = [
   {
-    id: "1",
+    postId: "1",
     title: "React Native is Awesome",
-    content:
-      "React Native lets you build mobile apps using only JavaScript. Learn once, write anywhere! This is a fake post used for the exercise.",
+    content: "React Native lets you build mobile apps using only JavaScript.",
   },
   {
-    id: "2",
+    postId: "2",
     title: "State Management Tips",
-    content:
-      "Managing state can be tricky. Use simple patterns first, then introduce libraries when needed. This is sample content for the exercise.",
+    content: "Use Context API or Redux for scalable state management.",
   },
   {
-    id: "3",
+    postId: "3",
     title: "UI Design Principles",
-    content:
-      "Good UI is about clarity and consistency. Keep interfaces simple and predictable. More sample content here.",
-  },
-  {
-    id: "4",
-    title: "Optimizing Performance",
-    content:
-      "Profile first, then optimize. Use proper list virtualization and avoid unnecessary renders. This is dummy text.",
+    content: "Consistency and simplicity are key to great UI design.",
   },
 ];
 
-export default function PostListScreen({ navigation }: Props) {
-  function renderItem({ item }: { item: (typeof POSTS)[number] }) {
-    return (
-      <>
-        {/* Replace this with your code here for each item to render (Use Pressable Component) */}
-      </>
-    );
-  }
+type NavigationProp = any;
+
+export default function PostListScreen() {
+  const navigation = useNavigation<NavigationProp>();
 
   return (
     <View style={styles.container}>
-      {/* Replace this with your code to render the list of items */}
+      <Text style={styles.header}>Blog Posts</Text>
+      {posts.map((post) => (
+        <View key={post.postId} style={styles.postItem}>
+          <Button
+            title={post.title}
+            onPress={() =>
+              navigation.navigate("PostDetail", {
+                postId: post.postId,
+                title: post.title,
+                content: post.content,
+              })
+            }
+          />
+        </View>
+      ))}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  list: {
-    padding: 16,
-  },
-  item: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    marginBottom: 12,
-    backgroundColor: "rgba(0,0,0,0.03)",
-  },
-  itemPressed: {
-    opacity: 0.7,
-  },
+  container: { flex: 1, padding: 20 },
+  header: { fontSize: 24, fontWeight: "bold", marginBottom: 20 },
+  postItem: { marginBottom: 15 },
 });
