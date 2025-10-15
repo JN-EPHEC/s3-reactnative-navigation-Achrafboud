@@ -2,8 +2,6 @@ import "react-native-gesture-handler";
 import "react-native-reanimated";
 
 import React from "react";
-import { Platform } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -50,15 +48,10 @@ function CoursesTabs() {
       <Tabs.Screen name="Wishlist" component={WishlistScreen} options={{ title: "My Wishlist" }} />
     </Tabs.Navigator>
   );
-}
-
-export default function RootLayout() {
   return (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Courses">
-        <Drawer.Screen name="Courses" component={CoursesTabs} />
-        <Drawer.Screen name="My Profile" component={ProfileScreen} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <Drawer.Navigator initialRouteName="Courses">
+      <Drawer.Screen name="Courses" component={CoursesTabs} />
+      <Drawer.Screen name="My Profile" component={ProfileScreen} />
+    </Drawer.Navigator>
   );
 }
